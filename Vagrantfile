@@ -7,8 +7,10 @@ Vagrant.require_version ">= 1.6.5"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Using Puppet Labs official vagrant boxes, from: https://vagrantcloud.com/puppetlabs
-  config.vm.box = "puppetlabs/ubuntu-14.04-64-puppet"
-
+  config.vm.box = "puppetlabs/centos-7.0-64-puppet"
+  config.vm.hostname = "mesos-test"
+  config.vm.network "private_network", ip: "172.21.17.150"
+  config.vm.network "forwarded_port", guest: 5050, host: 5053
   config.vm.provision :shell, :path => "./.vagrant_puppet/init.sh"
 
   config.vm.provision :puppet do |puppet|
